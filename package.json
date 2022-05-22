@@ -1,0 +1,11 @@
+{
+  "name": "node.js",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "git@github.com:huatree/node.js.git",
+  "author": "huatree <wang.yaohua@foxmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "lodash": "^4.17.21"
+  }
+}
