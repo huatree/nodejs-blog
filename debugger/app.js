@@ -1,6 +1,9 @@
-console.log(100)
-console.log(200)
-console.log(300)
-console.log(400)
-console.log(500)
-console.log(600)
+const http = require('http')
+http
+  .createServer(function (req, res) {
+    res.writeHead(200, { 'Content-Type': 'text/plain' })
+    res.end('Hello World')
+  })
+  .listen(8081)
+
+console.log('Server running at http://127.0.0.1:8081/')
