@@ -1,7 +1,7 @@
 {
   "name": "node.js",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "debugger/app.js",
   "repository": "git@github.com:huatree/node.js.git",
   "author": "huatree <wang.yaohua@foxmail.com>",
   "license": "MIT",
