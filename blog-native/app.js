@@ -1,9 +1,11 @@
+const url = require('url')
 const handleBlogRouter = require('./src/router/blog')
 const handleUserRouter = require('./src/router/user')
 
 const serverHandle = (req, res) => {
   res.setHeader('content-type', 'application/json')
   req.path = req.url.split('?')[0]
+  req.query = url.parse(req.url, true).query
 
   const blogData = handleBlogRouter(req, res)
   if(blogData) {
