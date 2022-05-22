@@ -1,19 +1,32 @@
 const http = require('http')
+const url = require('url')
 http
   .createServer(function (req, res) {
-   if(req.method === 'POST') {
-     console.log('content-type', req.headers['content-type'])
-     let postData = ''
-     req.on('data', chunk => {
-       postData += chunk.toString()
-     })
-     req.on('end', () => {
-       console.log('postData', postData)
-       res.end('hello world')
-     })
-   } else {
-      res.end('no POST')
-   }
+    const method = req.method
+    const path = req.url.split('?')[0]
+    const { query } = url.parse(req.url, true)
+    res.setHeader('content-type', 'application/json')
+    
+    let resData = {
+      method,
+      url,
+      path,
+      query
+    }
+
+    if(method === 'GET') {
+      res.end(JSON.stringify(resData))
+    }
+    if(method === 'POST') {
+      let postData = ''
+      req.on('data', chunk => {
+        postData += chunk.toString()
+      })
+      req.on('end', () => {
+        resData.data = postData
+        res.end(JSON.stringify(resData))
+      })
+    }
   })
   .listen(8081)
 
