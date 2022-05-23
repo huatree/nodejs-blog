@@ -29,8 +29,14 @@ const newBlog = (blogData = {}) => {
 }
 
 const updateBlog = (id, blogData = {}) => {
-  console.log('updateBlog', id, blogData)
-  return true
+  const { title, content } = blogData
+  const sql = `update blogs set title='${title}', content='${content}' where id=${id}`
+  return exec(sql).then((result) => {
+    if(result.affectedRows > 0) {
+      return true
+    }
+    return false
+  })
 }
 
 const delBlog = (id) => {
