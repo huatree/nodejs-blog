@@ -28,8 +28,10 @@ const handleBlogRouter = (req, res) => {
 
   // 新建博客
   if (method === 'POST' && path === '/api/blog/new') {
-    const data = newBlog(body)
-    return new SuccessModel(data)
+    body.author = 'zhangsan'
+    return newBlog(body).then((result) => {
+      return new SuccessModel(result)
+    })
   }
 
   // 更新博客
