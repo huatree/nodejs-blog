@@ -13,14 +13,8 @@ const getList = (author, keyword) => {
 }
 
 const getDetail = (id) => {
-  // mock
-  return {
-    id: 1,
-    title: '标题A',
-    content: '内容A',
-    createTime: '1653219335012',
-    author: '张三'
-  }
+  let sql = `select * from blogs where id='${id}'`
+  return exec(sql)
 }
 
 const newBlog = (blogData = {}) => {
