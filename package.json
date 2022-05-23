@@ -10,7 +10,8 @@
     "prod": "cross-env NODE_ENV=prod nodemon ./blog-native/bin/www.js"
   },
   "dependencies": {
-    "lodash": "^4.17.21"
+    "lodash": "^4.17.21",
+    "mysql2": "^2.3.3"
   },
   "devDependencies": {
     "cross-env": "^7.0.3",
