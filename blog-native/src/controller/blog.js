@@ -32,16 +32,21 @@ const updateBlog = (id, blogData = {}) => {
   const { title, content } = blogData
   const sql = `update blogs set title='${title}', content='${content}' where id=${id}`
   return exec(sql).then((result) => {
-    if(result.affectedRows > 0) {
+    if (result.affectedRows > 0) {
       return true
     }
     return false
   })
 }
 
-const delBlog = (id) => {
-  console.log('delBlog', id)
-  return true
+const delBlog = (id, author) => {
+  const sql = `delete from blogs where id=${id} and author='${author}'`
+  return exec(sql).then((result) => {
+    if (result.affectedRows > 0) {
+      return true
+    }
+    return false
+  })
 }
 
 module.exports = {
