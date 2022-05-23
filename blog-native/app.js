@@ -37,7 +37,9 @@ const serverHandle = (req, res) => {
 
     const blogData = handleBlogRouter(req, res)
     if (blogData) {
-      res.end(JSON.stringify(blogData))
+      blogData.then((result) => {
+        res.end(JSON.stringify(result))
+      })
       return
     }
 

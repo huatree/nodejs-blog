@@ -14,8 +14,9 @@ const handleBlogRouter = (req, res) => {
   if (method === 'GET' && path === '/api/blog/list') {
     const author = query.author || ''
     const keyword = query.keyword || ''
-    const listData = getList(author, keyword)
-    return new SuccessModel(listData)
+    return getList(author, keyword).then((result) => {
+      return new SuccessModel(result)
+    })
   }
 
   // 获取博客详情
