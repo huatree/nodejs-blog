@@ -38,7 +38,7 @@ const serverHandle = (req, res) => {
       return
     }
     const arr = item.split('=')
-    req.cookie[arr[0]] = arr[1]
+    req.cookie[arr[0].trim()] = arr[1].trim()
   })
 
   getPostData(req).then((postData) => {

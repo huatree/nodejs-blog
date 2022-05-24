@@ -8,7 +8,7 @@ const handleUserRouter = (req, res) => {
     const { username, password } = query
     return signIn(username, password).then((result) => {
       if (result.username) {
-        res.setHeader('Set-Cookie', `username=${result.username}; path=/`)
+        res.setHeader('Set-Cookie', `username=${result.username}; path=/; httpOnly`)
         return new SuccessModel()
       }
       return new ErrorModel('登录失败')
