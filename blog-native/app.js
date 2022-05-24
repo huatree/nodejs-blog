@@ -31,6 +31,15 @@ const serverHandle = (req, res) => {
   res.setHeader('content-type', 'application/json')
   req.path = req.url.split('?')[0]
   req.query = url.parse(req.url, true).query
+  req.cookie = {}
+  const cookieStr = req.headers.cookie || ''
+  cookieStr.split(';').forEach((item) => {
+    if (!item) {
+      return
+    }
+    const arr = item.split('=')
+    req.cookie[arr[0]] = arr[1]
+  })
 
   getPostData(req).then((postData) => {
     req.body = postData
