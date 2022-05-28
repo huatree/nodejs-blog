@@ -31,7 +31,13 @@ async function get(key) {
   })
 }
 
+async function del(key) {
+  const val = await client.del(key)
+  return val
+}
+
 module.exports = {
   set,
-  get
+  get,
+  del
 }
