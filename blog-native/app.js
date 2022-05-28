@@ -1,4 +1,5 @@
 const url = require('url')
+const { accessLog } = require('./src/utils/log')
 const { get, set } = require('./src/db/redis')
 const handleBlogRouter = require('./src/router/blog')
 const handleUserRouter = require('./src/router/user')
@@ -35,6 +36,13 @@ const getCookieExpires = () => {
 }
 
 const serverHandle = (req, res) => {
+  if (process.env.NODE_ENV === 'dev') {
+    console.log(`${req.method} -- ${req.url} -- ${req.headers['user-agent']} -- ${Date.now()}`)
+  }
+  if (process.env.NODE_ENV === 'prod') {
+    accessLog(`${req.method} -- ${req.url} -- ${req.headers['user-agent']} -- ${Date.now()}`)
+  }
+
   res.setHeader('content-type', 'application/json')
   req.path = req.url.split('?')[0]
   req.query = url.parse(req.url, true).query
