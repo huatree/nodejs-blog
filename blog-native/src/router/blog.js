@@ -1,20 +1,25 @@
-const {
-  getList,
-  getDetail,
-  newBlog,
-  updateBlog,
-  delBlog
-} = require('../controller/blog')
+const { getList, getDetail, newBlog, updateBlog, delBlog } = require('../controller/blog')
 const { SuccessModel, ErrorModel } = require('../model/resModel')
 
+const signVaild = (session) => {
+  if (!session.username) {
+    return Promise.resolve(new ErrorModel('尚未登录'))
+  }
+}
+
 const handleBlogRouter = (req, res) => {
-  const { method, path, query, body } = req
+  const { method, path, query, body, session } = req
 
   // 获取博客列表
   if (method === 'GET' && path === '/api/blog/list') {
-    const author = query.author || ''
-    const keyword = query.keyword || ''
-    return getList(author, keyword).then((result) => {
+    let author = query.author || ''
+    if(query.isadmin === '1') {
+      if(signVaild(session)) {
+        return signVaild(session)
+      }
+      author = session.username
+    }
+    return getList(author, query.keyword || '').then((result) => {
       return new SuccessModel(result)
     })
   }
@@ -28,7 +33,10 @@ const handleBlogRouter = (req, res) => {
 
   // 新建博客
   if (method === 'POST' && path === '/api/blog/new') {
-    body.author = 'zhangsan'
+    if(query.isadmin === '1' &&  signVaild(session)) {
+      return signVaild(session)
+    }
+    body.author = session.username
     return newBlog(body).then((result) => {
       return new SuccessModel(result)
     })
@@ -36,6 +44,9 @@ const handleBlogRouter = (req, res) => {
 
   // 更新博客
   if (method === 'POST' && path === '/api/blog/update') {
+    if(query.isadmin === '1' &&  signVaild(session)) {
+      return signVaild(session)
+    }
     return updateBlog(query.id, body).then((result) => {
       if (result) {
         return new SuccessModel()
@@ -46,7 +57,10 @@ const handleBlogRouter = (req, res) => {
 
   // 删除博客
   if (method === 'POST' && path === '/api/blog/del') {
-    return delBlog(query.id, (author = 'zhangsan')).then((result) => {
+    if(query.isadmin === '1' &&  signVaild(session)) {
+      return signVaild(session)
+    }
+    return delBlog(query.id, session.username).then((result) => {
       if (result) {
         return new SuccessModel()
       }
