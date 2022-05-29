@@ -49,9 +49,10 @@ app.post('/api', (req, res, next) => {
  * @param {func} next 
  */
 function signInValid(req, res, next) {
-  console.log('mock signIn success')
-  setTimeout(() => {
-    next()
+  console.log('mock signIn fail')
+  res.json({
+    errno: -1,
+    msg: 'signIn fail'
   })
 }
 
