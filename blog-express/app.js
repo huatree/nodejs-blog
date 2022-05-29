@@ -3,6 +3,8 @@ var express = require('express')
 var cookieParser = require('cookie-parser')
 var logger = require('morgan')
 const session = require('express-session')
+const RedisStore = require('connect-redis')(session)
+const { redisClient } = require('./db/redis')
 
 var blogRouter = require('./routes/blog')
 var userRouter = require('./routes/user')
@@ -21,7 +23,8 @@ app.use(
       path: '/', // 默认配置，可不写
       httpOnly: true, // 默认配置，可不写
       maxAge: 24 * 60 * 60 * 1000
-    }
+    },
+    store: new RedisStore({ client: redisClient })
   })
 )
 

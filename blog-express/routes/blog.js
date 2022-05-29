@@ -4,8 +4,13 @@ const { getList, getDetail } = require('../controller/blog')
 const { SuccessModel } = require('../model/resModel')
 
 router.get('/list', function (req, res, next) {
-  const { query } = req
-  return getList(query.author || '', query.keyword || '').then((result) => {
+  const {
+    query: { author, keyword, isadmin }
+  } = req
+  if(isadmin) {
+    author = req.session.username
+  }
+  return getList(author || '', keyword || '').then((result) => {
     res.json(new SuccessModel(result))
   })
 })
