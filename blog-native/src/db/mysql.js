@@ -8,8 +8,11 @@ con.connect()
 function exec(sql) {
   const promise = new Promise((resolve, reject) => {
     con.query(sql, (error, result) => {
-      if (error) throw error
-      resolve(result)
+      if (error) {
+        reject(error)
+      } else {
+        resolve(result)
+      }
     })
   })
   return promise

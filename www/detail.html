@@ -80,8 +80,8 @@
 
         // 显示数据
         const data = res.data || {}
-        $title.text(data.title)
-        $content.text(data.content)
+        $title.html(data.title)
+        $content.html(data.content)
         $infoContainer.append(
           $(`
                 <span>
