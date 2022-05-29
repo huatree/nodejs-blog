@@ -42,7 +42,20 @@ app.post('/api', (req, res, next) => {
   next()
 })
 
-app.get('/api/get-cookie', (req, res, next) => {
+/**
+ * mock signIn valid
+ * @param {object} req 
+ * @param {object} res 
+ * @param {func} next 
+ */
+function signInValid(req, res, next) {
+  console.log('mock signIn success')
+  setTimeout(() => {
+    next()
+  })
+}
+
+app.get('/api/get-cookie', signInValid, (req, res, next) => {
   console.log('get route "/api/get-cookie"')
   res.json({
     errno: 0,
