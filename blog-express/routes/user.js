@@ -5,7 +5,7 @@ const { SuccessModel, ErrorModel } = require('../model/resModel')
 
 router.post('/login', function (req, res, next) {
   const { username, password } = req.body
-  return signIn(username, password).then((result) => {
+  signIn(username, password).then((result) => {
     if (result.username) {
       req.session.username = result.username
       req.session.realname = result.realname
@@ -15,11 +15,13 @@ router.post('/login', function (req, res, next) {
   })
 })
 
-router.get('/login-test', (req, res, next) => {
-  if (req.session.username) {
-    return res.json({ errno: 0, msg: '测试登录成功' })
-  }
-  res.json({ errno: -1, msg: '未登录' })
+router.get('/signOut', (req, res, next) => {
+  req.session.destroy((err) => {
+    if (!err) {
+      return res.json(new SuccessModel('退出成功'))
+    }
+    res.json(new SuccessModel('系统异常'))
+  })
 })
 
 module.exports = router
