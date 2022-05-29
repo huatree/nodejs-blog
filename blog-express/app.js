@@ -18,6 +18,8 @@ app.use(cookieParser())
 
 app.use(
   session({
+    resave: false,
+    saveUninitialized: false,
     secret: 'Cy61v!97_e@#0',
     cookie: {
       path: '/', // 默认配置，可不写
