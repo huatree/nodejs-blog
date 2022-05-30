@@ -2,6 +2,8 @@ var createError = require('http-errors')
 var express = require('express')
 var cookieParser = require('cookie-parser')
 var logger = require('morgan')
+const path = require('path')
+const fs = require('fs')
 const session = require('express-session')
 const RedisStore = require('connect-redis')(session)
 const { redisClient } = require('./db/redis')
@@ -11,7 +13,17 @@ var userRouter = require('./routes/user')
 
 var app = express()
 
-app.use(logger('dev'))
+if(process.env.NODE_ENV !== 'prod') {
+  app.use(logger('dev'))
+} else {
+  const logFileName = path.join(__dirname, 'logs', 'access.log')
+  const writeStream = fs.createWriteStream(logFileName, {
+    flags: 'a'
+  })
+  app.use(logger('combined', {
+    stream: writeStream
+  }))
+}
 app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
 app.use(cookieParser())
