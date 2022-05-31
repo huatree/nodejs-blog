@@ -15,11 +15,14 @@ function getFileContent(fileName) {
   return promise
 }
 
-!(async function readFileData() {
+async function readAData() {
   const aData = await getFileContent('a.json')
-  console.log('a data', aData)
-  const bData = await getFileContent(aData.next)
-  console.log('b data', bData)
-  const cData = await getFileContent(bData.next)
-  console.log('c data', cData)
-})()
+  return aData
+}
+
+async function test() {
+  const aData = await readAData()
+  console.log(aData)
+}
+
+test()
