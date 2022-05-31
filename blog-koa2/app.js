@@ -4,6 +4,8 @@ const json = require('koa-json')
 const onerror = require('koa-onerror')
 const bodyparser = require('koa-bodyparser')
 const logger = require('koa-logger')
+const session = require('koa-generic-session')
+const redisStore = require('koa-redis')
 
 const blog = require('./routes/blog')
 const user = require('./routes/user')
@@ -12,9 +14,11 @@ const user = require('./routes/user')
 onerror(app)
 
 // middlewares
-app.use(bodyparser({
-  enableTypes:['json', 'form', 'text']
-}))
+app.use(
+  bodyparser({
+    enableTypes: ['json', 'form', 'text']
+  })
+)
 app.use(json())
 app.use(logger())
 
@@ -26,6 +30,22 @@ app.use(async (ctx, next) => {
   console.log(`${ctx.method} ${ctx.url} - ${ms}ms`)
 })
 
+// session config
+app.keys = ['Cykh567_e@#v!0']
+app.use(
+  session({
+    cookie: {
+      path: '/',
+      cookie: 'true',
+      maxAge: 24 * 60 * 60 * 1000
+    },
+    store: redisStore({
+      host: '127.0.0.1',
+      port: 63790
+    })
+  })
+)
+
 // routes
 app.use(blog.routes(), blog.allowedMethods())
 app.use(user.routes(), user.allowedMethods())
@@ -33,6 +53,6 @@ app.use(user.routes(), user.allowedMethods())
 // error-handling
 app.on('error', (err, ctx) => {
   console.error('server error', err, ctx)
-});
+})
 
 module.exports = app

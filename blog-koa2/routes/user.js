@@ -12,4 +12,13 @@ router.post('/login', async (ctx, next) => {
   }
 })
 
+router.get('/session-test', async (ctx, next) => {
+  ctx.session.count = ctx.session.count || 0
+  ctx.session.count++
+  ctx.body = {
+    errno: 0,
+    count: ctx.session.count
+  }
+})
+
 module.exports = router
