@@ -5,6 +5,8 @@ http
     console.log('cur time', Date.now())
     // mock error
     console.error('error', Date.now())
+    // mock requrest error
+    if (req.url === '/err') throw new Error('mock requrest error')
 
     res.writeHead(200, { 'Content-Type': 'text/plain' })
     res.end(
