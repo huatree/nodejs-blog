@@ -1,0 +1,14 @@
+{
+  "apps": {
+    "name": "pm2-test-server",
+    "script": "./pm2/app.js",
+    "watch": true,
+    "ignore_watch": [
+      "node_modules",
+      "./pm2/logs"
+    ],
+    "error_file": "./pm2/logs/err.log",
+    "out_file": "./pm2/logs/out.log",
+    "log_date_format": "YYYY-MM-DD HH:mm:ss"
+  }
+}
