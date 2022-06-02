@@ -1,8 +1,8 @@
 {
-  "name": "node.js",
+  "name": "nodejs-blog",
   "version": "1.0.0",
   "main": "blog-native/bin/www.js",
-  "repository": "git@github.com:huatree/node.js.git",
+  "repository": "git@github.com:huatree/nodejs-blog.git",
   "author": "huatree <wang.yaohua@foxmail.com>",
   "license": "MIT",
   "scripts": {
