@@ -7,7 +7,9 @@
   "license": "MIT",
   "scripts": {
     "dev": "cross-env NODE_ENV=dev nodemon ./blog-native/bin/www.js",
-    "prod": "cross-env NODE_ENV=prod nodemon ./blog-native/bin/www.js"
+    "prod": "cross-env NODE_ENV=prod nodemon ./blog-native/bin/www.js",
+    "dev:pm2": "cross-env NODE_ENV=dev nodemon ./pm2/app.js",
+    "prod:pm2": "cross-env NODE_ENV=prod pm2 start ./pm2/app.js"
   },
   "dependencies": {
     "express": "^4.18.1",
